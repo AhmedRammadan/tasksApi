@@ -22,6 +22,7 @@ class Users
         if ($passwordInput===$this->password) {
             return true;
         } else {
+            //  echo json_encode(array("error" => true  ,"message" => $passwordInput."--".$this->password));
             return false;
         }
     }
@@ -30,7 +31,7 @@ class Users
     {
  
     // query to check if email exists
-        $query = "SELECT user_id, name, user_name, email, phone, address, user_category
+        $query = "SELECT user_id, name, user_name, password, email, phone, address, user_category
             FROM " . $this->table_name . "
             WHERE user_name = ?
             LIMIT 0,1";
@@ -58,6 +59,7 @@ class Users
                 // assign values to object properties
                 $this->user_id = $row['user_id'];
                 $this->name = $row['name'];
+                $this->password = $row['password'];
                 $this->user_name = $row['user_name'];
                 $this->email = $row['email'];
                 $this->phone = $row['phone'];

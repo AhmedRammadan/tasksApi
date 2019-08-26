@@ -16,7 +16,7 @@ $database = new Database();
 $db = $database->getConnection();
 
 $user = new Users($db);
-$password = '';
+
 
 if (
    isset($_POST['user_name'])&&
@@ -25,9 +25,9 @@ if (
     !empty($_POST['password'])
 ) {
     $user->user_name = $_POST['user_name'];
-    $this->password =$_POST['password'];
+    $password = $_POST['password'];
     if ($user->userNameExists()) {
-        if ($user->password_verify($this->password)) {
+        if ($user->password_verify($password)) {
             http_response_code(201);
             echo json_encode(array("error" => false  ,"message" => "Successful login."));
         } else {
@@ -42,17 +42,24 @@ if (
  
     // if unable to create the users, tell the user
     else {
- 
+        http_response_code(503);
+
+        echo json_encode(array("error" => true  ,"message" => "user name  failed."));
+
         // set response code - 503 service unavailable
       //  http_response_code(503);
  
         // tell the user
       //  echo json_encode(array("error" => true  ,"message" => "Unable to create users."));
     }
-} elseif (!isset($_POST['name'])) {
-    echo json_encode(array("error" => true  ,"message" => "Name is required"));
-} elseif (empty($_POST['name'])) {
-    echo json_encode(array("error" => true  ,"message" => "Name is empty"));
+} elseif (!isset($_POST['user_name'])) {
+    echo json_encode(array("error" => true  ,"message" => "user_name is required"));
+} elseif (empty($_POST['user_name'])) {
+    echo json_encode(array("error" => true  ,"message" => "user_name is empty"));
+} elseif (!isset($_POST['password'])) {
+    echo json_encode(array("error" => true  ,"message" => "password is required"));
+} elseif (empty($_POST['password'])) {
+    echo json_encode(array("error" => true  ,"message" => "password is empty"));
 } else {
  
     // set response code - 400 bad request
