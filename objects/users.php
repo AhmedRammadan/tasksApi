@@ -17,7 +17,65 @@ class Users
     {
         $this->conn = $db;
     }
-
+    public function password_verify($passwordInput)
+    {
+        if ($passwordInput===$this->password) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    // check if given email exist in the database
+    public function userNameExists()
+    {
+ 
+    // query to check if email exists
+        $query = "SELECT user_id, name, user_name, email, phone, address, user_category
+            FROM " . $this->table_name . "
+            WHERE user_name = ?
+            LIMIT 0,1";
+ 
+        // prepare the query
+        $stmt = $this->conn->prepare($query);
+ 
+        // sanitize
+        $this->user_name=htmlspecialchars(strip_tags($this->user_name));
+ 
+        // bind given email value
+        $stmt->bindParam(1, $this->user_name);
+ 
+        // execute the query
+        if ($stmt->execute()) {
+            // get number of rows
+            $num = $stmt->rowCount();
+ 
+            // if email exists, assign values to object properties for easy access and use for php sessions
+            if ($num>0) {
+ 
+        // get record details / values
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+ 
+                // assign values to object properties
+                $this->user_id = $row['user_id'];
+                $this->name = $row['name'];
+                $this->user_name = $row['user_name'];
+                $this->email = $row['email'];
+                $this->phone = $row['phone'];
+                $this->address = $row['address'];
+                $this->user_category = $row['user_category'];
+ 
+                // return true because email exists in the database
+                return true;
+            }
+        } else {
+            if ($stmt->errorInfo()[2] !== false) {
+                echo json_encode(array("error" => true  ,"message" => $stmt->errorInfo()[2]));
+            }
+            return false;
+        }
+        // return false if email does not exist in the database
+        return false;
+    }
     public function read()
     {
         $query = "SELECT * FROM
