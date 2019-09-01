@@ -19,7 +19,9 @@ $db = $database->getConnection();
 // initialize object
 $task = new Task($db);
 
-if (isset($_POST['task_desc'])&&
+if (isset($_POST['task_title'])&&
+    !empty($_POST['task_title'])&&
+    isset($_POST['task_desc'])&&
     !empty($_POST['task_desc'])&&
    isset($_POST['customer_id'])&&
     !empty($_POST['customer_id'])&&
@@ -32,6 +34,7 @@ if (isset($_POST['task_desc'])&&
     isset($_POST['status_id'])&&
     !empty($_POST['status_id'])
 ) {
+    $task->task_title = $_POST['task_title'];
     $task->task_desc = $_POST['task_desc'];
     $task->customer_id = $_POST['customer_id'];
     $task->module_id = $_POST['module_id'];
@@ -59,9 +62,9 @@ if (isset($_POST['task_desc'])&&
         // tell the user
       //  echo json_encode(array("error" => true  ,"message" => "Unable to create users."));
     }
-} elseif (!isset($_POST['task_desc'])) {
+} elseif (!isset($_POST['task_title'])) {
     echo json_encode(array("error" => true  ,"message" => "task_desc is required"));
-} elseif (empty($_POST['task_desc'])) {
+} elseif (empty($_POST['task_title'])) {
     echo json_encode(array("error" => true  ,"message" => "task_desc is empty"));
 } else {
  

@@ -6,6 +6,7 @@ class Task
 
 
     public $task_id;
+    public $task_title;
     public $task_desc;
     public $customer_id;
     public $module_id;
@@ -37,12 +38,13 @@ class Task
         $query = "INSERT INTO
   " . $this->table_name . "
 SET
-  task_desc=:task_desc, customer_id=:customer_id, module_id=:module_id, img_url=:img_url, created_by=:created_by, created_date=:created_date,closed_date=:closed_date, status_id=:status_id";
+  task_title=:task_title, task_desc=:task_desc, customer_id=:customer_id, module_id=:module_id, img_url=:img_url, created_by=:created_by, created_date=:created_date,closed_date=:closed_date, status_id=:status_id";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
 
         // sanitize
+        $this->task_title=htmlspecialchars(strip_tags($this->task_title));
         $this->task_desc=htmlspecialchars(strip_tags($this->task_desc));
         $this->customer_id=htmlspecialchars(strip_tags($this->customer_id));
         $this->module_id=htmlspecialchars(strip_tags($this->module_id));
@@ -53,6 +55,7 @@ SET
         $this->status_id=htmlspecialchars(strip_tags($this->status_id));
 
         // bind values
+        $stmt->bindParam(":task_title", $this->task_title);
         $stmt->bindParam(":task_desc", $this->task_desc);
         $stmt->bindParam(":customer_id", $this->customer_id);
         $stmt->bindParam(":module_id", $this->module_id);

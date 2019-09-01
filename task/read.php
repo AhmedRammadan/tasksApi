@@ -37,7 +37,9 @@ if ($num>0) {
         extract($row);
 
         $tasks_item=array(
+            
             "task_id" => $task_id,
+            "task_title" => $task_title,
             "task_desc" => $task_desc,
             "customer_id" => $customer_id,
             "module_id" => $module_id,

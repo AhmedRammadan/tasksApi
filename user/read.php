@@ -39,6 +39,7 @@ if ($num>0) {
         $users_item=array(
             "user_id" => $user_id,
             "user_name" => $user_name,
+            "name" => $name,
             "email" => $email,
             "phone" => $phone,
             "address" => $address,

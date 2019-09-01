@@ -55,7 +55,6 @@ class Users
  
         // get record details / values
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
- 
                 // assign values to object properties
                 $this->user_id = $row['user_id'];
                 $this->name = $row['name'];
@@ -68,6 +67,8 @@ class Users
  
                 // return true because email exists in the database
                 return true;
+            } else {
+                return false;
             }
         } else {
             if ($stmt->errorInfo()[2] !== false) {

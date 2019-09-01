@@ -86,6 +86,31 @@ SET
         $this->phone = $row['phone'];
         $this->address = $row['address'];
     }
+    public function readOneByCustomerName()
+    {
+
+    // query to read single record
+        $query = "SELECT * FROM " . $this->table_name . " 
+        WHERE
+        customer_name = ?
+        LIMIT
+        0,1";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(1, $this->customer_name);
+
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // set values to object properties
+        $this->customer_id = $row['customer_id'];
+        $this->customer_name = $row['customer_name'];
+        $this->email = $row['email'];
+        $this->phone = $row['phone'];
+        $this->address = $row['address'];
+    }
     // update the product
     public function update()
     {

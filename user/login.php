@@ -29,7 +29,14 @@ if (
     if ($user->userNameExists()) {
         if ($user->password_verify($password)) {
             http_response_code(201);
-            echo json_encode(array("error" => false  ,"message" => "Successful login."));
+        
+            echo json_encode(array("error" => false  ,"message" => "Successful login.",
+            "user_info"=> ["user_id" => $user->user_id,
+            "name" => $user->name,
+            "email" => $user->email,
+            "phone" => $user->phone,
+            "address" => $user->address,
+            "user_category" => $user->user_category,] ));
         } else {
             echo json_encode(array("error" => true  ,"message" => "Login failed."));
         }

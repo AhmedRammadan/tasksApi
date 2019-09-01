@@ -33,12 +33,24 @@ if (isset($_POST['customer_name'])&&
     $customers->address = $_POST['address'];
   
     if ($customers->create()) {
+        $product_arr = array();
+        $customers->readOneByCustomerName();
+        if ($customers->customer_name!=null) {
+            $product_arr = array(
+                 "customer_id" =>  $customers->customer_id,
+                 "customer_name" => $customers->customer_name,
+                 "email" => $customers->email,
+                 "phone" => $customers->phone,
+                 "address" => $customers->address
+
+             );
+        }
 
         // set response code - 201 created
         http_response_code(201);
  
         // tell the user
-        echo json_encode(array("error" => false  ,"message" => "users was created."));
+        echo json_encode(array("error" => false  ,"message" => "users was created.","customer_info" => $product_arr  ,));
     }
  
     // if unable to create the users, tell the user

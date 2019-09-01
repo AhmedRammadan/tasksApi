@@ -30,12 +30,13 @@ if (isset($_POST['status_id'])&&
     $stmt = $task->readByStatus();
     $num = $stmt->rowCount();
  
+    // users array
+    $tasks_arr=array();
+    $tasks_arr["tasks"]=array();
+
     // check if more than 0 record found
     if ($num>0) {
  
-    // users array
-        $tasks_arr=array();
-        $tasks_arr["tasks"]=array();
  
         // retrieve our table contents
         // fetch() is faster than fetchAll()
@@ -45,6 +46,7 @@ if (isset($_POST['status_id'])&&
 
             $tasks_item=array(
             "task_id" => $task_id,
+            "task_title" => $task_title,
             "task_desc" => $task_desc,
             "customer_id" => $customer_id,
             "module_id" => $module_id,
@@ -70,9 +72,7 @@ if (isset($_POST['status_id'])&&
         http_response_code(404);
  
         // tell the user no products found
-        echo json_encode(
-            array("message" => "No tasks found.")
-    );
+        echo json_encode($tasks_arr);
     }
 } elseif (!isset($_POST['status_id'])) {
     echo json_encode(array("error" => true  ,"message" => "status_id is required"));
