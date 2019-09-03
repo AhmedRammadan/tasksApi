@@ -37,14 +37,15 @@ if (isset($_POST['customer_id'])&&
         http_response_code(201);
  
         // tell the user
-        echo json_encode(array("error" => false  ,"message" => "users was created."));
+        echo json_encode(array("error" => false  ,"message" => "module was created."));
     }
  
     // if unable to create the users, tell the user
     else {
- 
+        http_response_code(503);
+        echo json_encode(array("error" => true  ,"message" => "module not created."));
         // set response code - 503 service unavailable
-      //  http_response_code(503);
+        
  
         // tell the user
       //  echo json_encode(array("error" => true  ,"message" => "Unable to create users."));

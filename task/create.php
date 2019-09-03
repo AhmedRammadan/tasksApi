@@ -29,6 +29,8 @@ if (isset($_POST['task_title'])&&
     !empty($_POST['module_id'])&&
    isset($_POST['img_url'])&&
     !empty($_POST['img_url'])&&
+    isset($_POST['to_user_id'])&&
+    !empty($_POST['to_user_id'])&&
     isset($_POST['created_by'])&&
     !empty($_POST['created_by'])&&
     isset($_POST['status_id'])&&
@@ -39,6 +41,7 @@ if (isset($_POST['task_title'])&&
     $task->customer_id = $_POST['customer_id'];
     $task->module_id = $_POST['module_id'];
     $task->img_url = $_POST['img_url'];
+    $task->to_user_id =$_POST['to_user_id'];
     $task->created_by =$_POST['created_by'];
     $task->created_date =date('Y-m-d H:i:s');
     $task->closed_date ='0000-00-00 00:00:00';
@@ -63,9 +66,9 @@ if (isset($_POST['task_title'])&&
       //  echo json_encode(array("error" => true  ,"message" => "Unable to create users."));
     }
 } elseif (!isset($_POST['task_title'])) {
-    echo json_encode(array("error" => true  ,"message" => "task_desc is required"));
+    echo json_encode(array("error" => true  ,"message" => "task_title is required"));
 } elseif (empty($_POST['task_title'])) {
-    echo json_encode(array("error" => true  ,"message" => "task_desc is empty"));
+    echo json_encode(array("error" => true  ,"message" => "task_title is empty"));
 } else {
  
     // set response code - 400 bad request

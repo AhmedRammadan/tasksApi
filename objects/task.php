@@ -12,6 +12,7 @@ class Task
     public $module_id;
     public $img_url;
     public $created_by;
+    public $to_user_id;
     public $created_date;
     public $closed_date;
     public $status_id;
@@ -38,7 +39,7 @@ class Task
         $query = "INSERT INTO
   " . $this->table_name . "
 SET
-  task_title=:task_title, task_desc=:task_desc, customer_id=:customer_id, module_id=:module_id, img_url=:img_url, created_by=:created_by, created_date=:created_date,closed_date=:closed_date, status_id=:status_id";
+  task_title=:task_title, task_desc=:task_desc, to_user_id=:to_user_id, customer_id=:customer_id, module_id=:module_id, img_url=:img_url, created_by=:created_by, created_date=:created_date,closed_date=:closed_date, status_id=:status_id";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -49,6 +50,7 @@ SET
         $this->customer_id=htmlspecialchars(strip_tags($this->customer_id));
         $this->module_id=htmlspecialchars(strip_tags($this->module_id));
         $this->img_url=htmlspecialchars(strip_tags($this->img_url));
+        $this->to_user_id=htmlspecialchars(strip_tags($this->to_user_id));
         $this->created_by=htmlspecialchars(strip_tags($this->created_by));
         $this->created_date=htmlspecialchars(strip_tags($this->created_date));
         $this->closed_date=htmlspecialchars(strip_tags($this->closed_date));
@@ -60,6 +62,7 @@ SET
         $stmt->bindParam(":customer_id", $this->customer_id);
         $stmt->bindParam(":module_id", $this->module_id);
         $stmt->bindParam(":img_url", $this->img_url);
+        $stmt->bindParam(":to_user_id", $this->to_user_id);
         $stmt->bindParam(":created_by", $this->created_by);
         $stmt->bindParam(":created_date", $this->created_date);
         $stmt->bindParam(":closed_date", $this->closed_date);
@@ -134,7 +137,41 @@ SET
         return $stmt;
     }
     // update the product
-    public function update()
+    
+    public function updateDeveloper()
+    {
+                    
+    // update query
+        $query = "UPDATE
+        " . $this->table_name . "
+        SET
+        to_user_id = :to_user_id
+        WHERE
+        task_id = :task_id";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // sanitize
+        $this->to_user_id=htmlspecialchars(strip_tags($this->to_user_id));
+        $this->task_id=htmlspecialchars(strip_tags($this->task_id));
+
+        // bind new values
+        $stmt->bindParam(':to_user_id', $this->to_user_id);
+        $stmt->bindParam(':task_id', $this->task_id);
+
+        // execute the query
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            if (strpos($stmt->errorInfo()[2], 'to_user_id') !== false) {
+                echo json_encode(array("error" => true  ,"message" => 'to_user_id taken'));
+            }
+        }
+
+        return false;
+    }
+    public function updateStatus()
     {
                     
     // update query

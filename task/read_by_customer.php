@@ -52,6 +52,7 @@ if (isset($_POST['customer_id'])&&
             "customer_id" => $customer_id,
             "module_id" => $module_id,
             "img_url" => $img_url,
+            "to_user_id" => $to_user_id,
             "created_by" => $created_by,
             "created_date" => $created_date,
             "closed_date" => $closed_date,

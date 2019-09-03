@@ -26,7 +26,7 @@ if (isset($_POST['task_id'])&&
     $task->task_id = $_POST['task_id'];
     $task->status_id = $_POST['status_id'];
   
-    if ($task->update()) {
+    if ($task->updateStatus()) {
 
         // set response code - 201 update
         http_response_code(201);

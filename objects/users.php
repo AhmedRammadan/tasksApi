@@ -123,13 +123,8 @@ SET
         if ($stmt->execute()) {
             return true;
         } else {
-            if (strpos($stmt->errorInfo()[2], 'name') !== false &&
-    strpos($stmt->errorInfo()[2], 'user_name') !== false) {
-                echo json_encode(array("error" => true  ,"message" => 'Name and User Name taken '));
-            } elseif (strpos($stmt->errorInfo()[2], 'user_name') !== false) {
+            if (strpos($stmt->errorInfo()[2], 'user_name') !== false) {
                 echo json_encode(array("error" => true  ,"message" => 'User Name taken'));
-            } elseif (strpos($stmt->errorInfo()[2], 'name') !== false) {
-                echo json_encode(array("error" => true  ,"message" => 'Name taken'));
             }
         }
     

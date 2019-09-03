@@ -44,6 +44,7 @@ if ($num>0) {
             "customer_id" => $customer_id,
             "module_id" => $module_id,
             "img_url" => $img_url,
+            "to_user_id" => $to_user_id,
             "created_by" => $created_by,
             "created_date" => $created_date,
             "closed_date" => $closed_date,
@@ -65,7 +66,7 @@ if ($num>0) {
  
     // tell the user no products found
     echo json_encode(
-        array("message" => "No users found.")
+        array("message" => "No users found.","tasks"=>[])
     );
 }
  
