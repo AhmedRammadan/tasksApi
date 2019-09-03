@@ -119,6 +119,23 @@ SET
         $stmt->bindParam(1, $this->created_by);
 
         $stmt->execute();
+
+        return $stmt;
+    }
+    public function readToDeveloper()
+    {
+
+    // query to read single record
+        $query = "SELECT * FROM " . $this->table_name . " 
+        WHERE
+        to_user_id = ?";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(1, $this->to_user_id);
+
+        $stmt->execute();
+        
         return $stmt;
     }
     public function readByCustomer()
