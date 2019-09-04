@@ -45,10 +45,10 @@ if (isset($_POST['task_title'])&&
     $task->created_by =$_POST['created_by'];
     $task->created_date =date('Y-m-d H:i:s');
     $task->closed_date ='0000-00-00 00:00:00';
+    $task->duration_task ='1';
     $task->status_id = $_POST['status_id'];
   
     if ($task->create()) {
-
         // set response code - 201 created
         http_response_code(201);
 
@@ -59,11 +59,11 @@ if (isset($_POST['task_title'])&&
     // if unable to create the users, tell the user
     else {
  
-        // set response code - 503 service unavailable
-      //  http_response_code(503);
+        // // set response code - 503 service unavailable
+        // http_response_code(503);
  
-        // tell the user
-      //  echo json_encode(array("error" => true  ,"message" => "Unable to create users."));
+        // // tell the user
+        // echo json_encode(array("error" => true  ,"message" => "Unable to create users."));
     }
 } elseif (!isset($_POST['task_title'])) {
     echo json_encode(array("error" => true  ,"message" => "task_title is required"));
